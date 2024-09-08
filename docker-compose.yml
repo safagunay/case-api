@@ -1,0 +1,31 @@
+services: 
+  mysqldb:
+    image: mysql
+    restart: always
+    env_file: ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: $DB_PASSWORD
+      MYSQL_DATABASE: $DB_DATABASE
+      MYSQL_TCP_PORT: $DB_PORT
+    volumes: 
+      - safagunay-db-config:/etc/mysql
+      - safagunay-db-data:/var/lib/mysql
+    ports:
+      - $DB_PORT:$DB_PORT
+  
+  app:
+    image: safagunay-app
+    env_file: ./.env
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on:
+      - mysqldb
+    stdin_open: true
+    tty: true
+    ports:
+      - $PORT:$PORT
+
+volumes: 
+  safagunay-db-config:
+  safagunay-db-data:
