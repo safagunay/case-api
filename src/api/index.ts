@@ -4,7 +4,7 @@ import "reflect-metadata";
 import { env } from "./common/utils/envConfig";
 import { logger } from "./common/utils/logger";
 import app from "./server";
-import { dataSource } from "../data-access";
+import { dataSource } from "../infra";
 
 (async () => {
   await dataSource.initialize();

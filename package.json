@@ -15,10 +15,10 @@
     "lint:fix": "biome check src/ --fix",
     "format": "biome format src/",
     "prepare": "husky",
-    "typeorm:generate": "npx typeorm-ts-node-commonjs migration:generate -d src/data-access/typeorm/dataSource.ts",
-    "typeorm:migrate": "npx typeorm-ts-node-commonjs migration:run -d src/data-access/typeorm/dataSource.ts",
-    "typeorm:revert": "npx typeorm-ts-node-commonjs migration:revert -d src/data-access/typeorm/dataSource.ts",
-    "typeorm:drop": "npx typeorm-ts-node-commonjs migration:drop -d src/data-access/typeorm/dataSource.ts"
+    "typeorm:generate": "npx typeorm-ts-node-commonjs migration:generate -d src/infra/typeorm/dataSource.ts",
+    "typeorm:migrate": "npx typeorm-ts-node-commonjs migration:run -d src/infra/typeorm/dataSource.ts",
+    "typeorm:revert": "npx typeorm-ts-node-commonjs migration:revert -d src/infra/typeorm/dataSource.ts",
+    "typeorm:drop": "npx typeorm-ts-node-commonjs migration:drop -d src/infra/typeorm/dataSource.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",
