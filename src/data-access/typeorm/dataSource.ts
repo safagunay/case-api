@@ -1,3 +1,6 @@
+// - Modifies global `Reflect` object (or defines one in ES5 runtimes).
+import "reflect-metadata";
+
 import { DataSource, DataSourceOptions } from "typeorm";
 import dotenv from "dotenv";
 import { UserEntity } from "../../entities";
@@ -16,7 +19,7 @@ let connectionOptions: DataSourceOptions = {
   synchronize: false,
   logging: true,
   entities,
-  migrations: ["dist/data-access/typeorm/migrations/*{.ts,.js}"],
+  migrations: ["src/data-access/typeorm/migrations/*{.ts,.js}"],
 };
 
 export const dataSource = new DataSource({
