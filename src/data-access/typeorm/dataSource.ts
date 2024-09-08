@@ -3,7 +3,7 @@ import "reflect-metadata";
 
 import { DataSource, DataSourceOptions } from "typeorm";
 import dotenv from "dotenv";
-import { UserEntity } from "../../entities";
+import { UserEntity } from "../../domain";
 import { AddUsersTable1725804067585 } from "./migrations/1725804067585-AddUsersTable";
 
 dotenv.config();
