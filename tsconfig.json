@@ -4,18 +4,15 @@
     "strictPropertyInitialization": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "declaration": false,
     "module": "CommonJS",
     "baseUrl": ".",
     "paths": {
       "./*": ["src/*"]
     },
-    "moduleResolution": "Node",
     "outDir": "dist",
-    "importsNotUsedAsValues": "remove",
-    "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

@@ -1,20 +1,25 @@
-services: 
+services:
   mysqldb:
     image: mysql
     restart: always
     env_file: ./.env
     environment:
-      MYSQL_RANDOM_ROOT_PASSWORD: "true"
+      MYSQL_ROOT_PASSWORD: $DB_PASSWORD
       MYSQL_USER: $DB_USERNAME
       MYSQL_PASSWORD: $DB_PASSWORD
       MYSQL_DATABASE: $DB_DATABASE
       MYSQL_TCP_PORT: $DB_PORT
-    volumes: 
+    volumes:
       - safagunay-db-config:/etc/mysql
       - safagunay-db-data:/var/lib/mysql
     ports:
       - $DB_PORT:$DB_PORT
-  
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
   app:
     image: safagunay-app
     env_file: ./.env
@@ -22,12 +27,13 @@ services:
       context: .
       dockerfile: ./Dockerfile
     depends_on:
-      - mysqldb
+      mysqldb:
+        condition: service_healthy
     stdin_open: true
     tty: true
     ports:
       - $PORT:$PORT
 
-volumes: 
+volumes:
   safagunay-db-config:
   safagunay-db-data:

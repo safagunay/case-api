@@ -4,10 +4,13 @@ import "reflect-metadata";
 import { DataSource, DataSourceOptions } from "typeorm";
 import dotenv from "dotenv";
 import { UserEntity } from "../../entities";
+import { AddUsersTable1725804067585 } from "./migrations/1725804067585-AddUsersTable";
 
 dotenv.config();
 
 const entities = [UserEntity];
+
+const migrations = [AddUsersTable1725804067585];
 
 let connectionOptions: DataSourceOptions = {
   type: process.env.DB_TYPE as "mysql",
@@ -19,7 +22,7 @@ let connectionOptions: DataSourceOptions = {
   synchronize: false,
   logging: true,
   entities,
-  migrations: ["src/data-access/typeorm/migrations/*{.ts,.js}"],
+  migrations,
 };
 
 export const dataSource = new DataSource({

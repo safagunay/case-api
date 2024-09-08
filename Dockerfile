@@ -12,8 +12,8 @@ RUN npm ci
 # Bundle app source
 COPY . .
 
-# Build the TypeScript files
+# Build typescript files
 RUN npm run build
 
 # Start the app
-CMD npm run start
+CMD npm run typeorm:migrate && npm run start
