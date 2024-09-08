@@ -1,1 +1,2 @@
-export { dataSource } from "./typeorm/dataSource";
+export * from "./typeorm";
+export * from "./repositories";
