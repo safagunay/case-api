@@ -1,6 +1,6 @@
 import type { NextFunction, Request, RequestHandler, Response } from "express";
-import { createUser, getUser, getUsers } from "../../app";
-import { getUserRepository } from "../../infra";
+import { borrowBook, createUser, getUser, getUsers } from "../../app";
+import { getUserRepository, getBookRepository, getUserBookRepository } from "../../infra";
 import { StatusCodes } from "http-status-codes";
 
 class UserController {
@@ -50,7 +50,56 @@ class UserController {
     try {
       const userRepository = await getUserRepository();
 
-      res.status(200).send(await createUser(req.body, userRepository));
+      res.status(StatusCodes.OK).send(await createUser(req.body, userRepository));
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  public borrowBookHandler: RequestHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const userBookRepository = await getUserBookRepository();
+      const userRepository = await getUserRepository();
+      const bookRepository = await getBookRepository();
+
+      const userId = req.params.userId as unknown as number;
+      const bookId = req.params.bookId as unknown as number;
+
+      const result = await borrowBook(
+        { userId, bookId },
+        userBookRepository,
+        userRepository,
+        bookRepository
+      );
+
+      if (result === "book-not-available") {
+        res.status(StatusCodes.CONFLICT).send({
+          message: "book is already borrowed",
+        });
+        return;
+      }
+
+      if (result === "book-not-found") {
+        res.status(StatusCodes.NOT_FOUND).send({
+          message: "book not found",
+        });
+        return;
+      }
+
+      if (result === "user-not-found") {
+        res.status(StatusCodes.NOT_FOUND).send({
+          message: "user not found",
+        });
+        return;
+      }
+
+      res.status(StatusCodes.OK).send({
+        message: "success",
+      });
     } catch (err) {
       next(err);
     }

@@ -1,5 +1,5 @@
 import type { NextFunction, Request, RequestHandler, Response } from "express";
-import { getBookRepository } from "../../infra/repositories/bookRepository";
+import { getBookRepository } from "../../infra";
 import { createBook, getBook, getBooks } from "../../app";
 import { StatusCodes } from "http-status-codes";
 
@@ -50,7 +50,7 @@ class BookController {
     try {
       const bookRepository = await getBookRepository();
 
-      res.status(200).send(await createBook(req.body, bookRepository));
+      res.status(StatusCodes.OK).send(await createBook(req.body, bookRepository));
     } catch (err) {
       next(err);
     }

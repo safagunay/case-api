@@ -9,3 +9,5 @@ userRouter.get("/:id", userController.getUserHandler);
 
 userRouter.get("/", userController.getUsersHandler);
 
+userRouter.post("/:userId/borrow/:bookId", userController.borrowBookHandler);
+
