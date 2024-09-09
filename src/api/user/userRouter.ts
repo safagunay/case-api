@@ -5,6 +5,7 @@ export const userRouter: Router = express.Router();
 
 userRouter.post("/", userController.createUserHandler);
 
+userRouter.get("/:id", userController.getUserHandler);
+
 // userRouter.get("/", userController.getUsers);
 
-// userRouter.get("/:id", userController.getUser);
