@@ -11,3 +11,5 @@ userRouter.get("/", userController.getUsersHandler);
 
 userRouter.post("/:userId/borrow/:bookId", userController.borrowBookHandler);
 
+userRouter.post("/:userId/return/:bookId", userController.returnBookHandler);
+

@@ -1,5 +1,5 @@
 import type { NextFunction, Request, RequestHandler, Response } from "express";
-import { borrowBook, createUser, getUser, getUsers } from "../../app";
+import { borrowBook, createUser, getUser, getUsers, returnBook } from "../../app";
 import { getUserRepository, getBookRepository, getUserBookRepository } from "../../infra";
 import { StatusCodes } from "http-status-codes";
 
@@ -79,6 +79,64 @@ class UserController {
       if (result === "book-not-available") {
         res.status(StatusCodes.CONFLICT).send({
           message: "book is already borrowed",
+        });
+        return;
+      }
+
+      if (result === "book-not-found") {
+        res.status(StatusCodes.NOT_FOUND).send({
+          message: "book not found",
+        });
+        return;
+      }
+
+      if (result === "user-not-found") {
+        res.status(StatusCodes.NOT_FOUND).send({
+          message: "user not found",
+        });
+        return;
+      }
+
+      res.status(StatusCodes.OK).send({
+        message: "success",
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  public returnBookHandler: RequestHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const userBookRepository = await getUserBookRepository();
+      const userRepository = await getUserRepository();
+      const bookRepository = await getBookRepository();
+
+      const userId = req.params.userId as unknown as number;
+      const bookId = req.params.bookId as unknown as number;
+
+      const score = req.body?.score as unknown as number;
+
+      const result = await returnBook(
+        { userId, bookId, score },
+        userBookRepository,
+        userRepository,
+        bookRepository
+      );
+
+      if (result === "book-already-returned") {
+        res.status(StatusCodes.CONFLICT).send({
+          message: "book is already returned",
+        });
+        return;
+      }
+
+      if (result === "book-not-borrowed-by-user") {
+        res.status(StatusCodes.CONFLICT).send({
+          message: "book is not borrowed by user",
         });
         return;
       }

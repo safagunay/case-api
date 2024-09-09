@@ -4,11 +4,8 @@ import "reflect-metadata";
 import { env } from "./common/utils/envConfig";
 import { logger } from "./common/utils/logger";
 import app from "./server";
-import { dataSource } from "../infra";
 
 (async () => {
-  await dataSource.initialize();
-
   const server = app.listen(env.PORT, () => {
     const { NODE_ENV, HOST, PORT } = env;
     logger.info(`Server (${NODE_ENV}) running on port http://${HOST}:${PORT}`);
