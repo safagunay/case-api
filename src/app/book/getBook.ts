@@ -9,7 +9,7 @@ const GetBookSchema = z.object({
 
 export type GetBookParams = z.infer<typeof GetBookSchema>;
 
-export type GetBookResult = Omit<BookEntity, "timesScored"> | null;
+export type GetBookResult = Pick<BookEntity, "id" | "name" | "score"> | null;
 
 export async function getBook(
   params: GetBookParams,

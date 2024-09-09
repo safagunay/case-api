@@ -1,5 +1,5 @@
 export { createUser, type CreateUserParams } from "./createUser";
 
-export { getUser, type GetUserParams } from "./getUser";
+export { getUser, type GetUserParams, type GetUserResult } from "./getUser";
 
-export { getUsers } from "./getUsers";
+export { getUsers, type GetUsersResult } from "./getUsers";

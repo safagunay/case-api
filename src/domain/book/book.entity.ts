@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { UserBookEntity } from "../user/user-book.entity";
 
 @Entity()
 export class BookEntity {
@@ -13,4 +14,7 @@ export class BookEntity {
 
   @Column({ type: "integer" })
   timesScored: number;
+
+  @OneToMany(() => UserBookEntity, (userBook) => userBook.book)
+  userBooks: UserBookEntity[];
 }

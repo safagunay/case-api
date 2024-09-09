@@ -3,12 +3,12 @@ import "reflect-metadata";
 
 import { DataSource, DataSourceOptions } from "typeorm";
 import dotenv from "dotenv";
-import { BookEntity, UserEntity } from "../../domain";
+import { BookEntity, UserBookEntity, UserEntity } from "../../domain";
 import { migrations } from "./migrations";
 
 dotenv.config();
 
-const entities = [UserEntity, BookEntity];
+const entities = [UserEntity, BookEntity, UserBookEntity];
 
 let connectionOptions: DataSourceOptions = {
   type: process.env.DB_TYPE as "mysql",
