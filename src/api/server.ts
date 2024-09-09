@@ -2,10 +2,11 @@ import cors from "cors";
 import express, { type Express } from "express";
 import helmet from "helmet";
 
-import { userRouter } from "./user/userRouter";
 import errorHandler from "./common/middleware/errorHandler";
 import rateLimiter from "./common/middleware/rateLimiter";
 import { env } from "./common/utils/envConfig";
+import { userRouter } from "./user/userRouter";
+import { booksRouter } from "./book/bookRouter";
 
 const app: Express = express();
 
@@ -21,6 +22,7 @@ app.use(rateLimiter);
 
 // Routes
 app.use("/users", userRouter);
+app.use("/books", booksRouter);
 
 // Error handlers
 app.use(errorHandler());

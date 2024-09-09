@@ -3,14 +3,12 @@ import "reflect-metadata";
 
 import { DataSource, DataSourceOptions } from "typeorm";
 import dotenv from "dotenv";
-import { UserEntity } from "../../domain";
-import { AddUsersTable1725804067585 } from "./migrations/1725804067585-AddUsersTable";
+import { BookEntity, UserEntity } from "../../domain";
+import { migrations } from "./migrations";
 
 dotenv.config();
 
-const entities = [UserEntity];
-
-const migrations = [AddUsersTable1725804067585];
+const entities = [UserEntity, BookEntity];
 
 let connectionOptions: DataSourceOptions = {
   type: process.env.DB_TYPE as "mysql",
