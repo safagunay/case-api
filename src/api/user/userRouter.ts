@@ -7,5 +7,5 @@ userRouter.post("/", userController.createUserHandler);
 
 userRouter.get("/:id", userController.getUserHandler);
 
-// userRouter.get("/", userController.getUsers);
+userRouter.get("/", userController.getUsersHandler);
 

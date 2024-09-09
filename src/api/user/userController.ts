@@ -1,19 +1,24 @@
 import type { NextFunction, Request, RequestHandler, Response } from "express";
-import { createUser, getUser } from "../../app";
+import { createUser, getUser, getUsers } from "../../app";
 import { getUserRepository } from "../../infra";
 import { StatusCodes } from "http-status-codes";
 
 class UserController {
-  // public getUsers: RequestHandler = async (_req: Request, res: Response) => {
-  //   const serviceResponse = await userService.findAll();
-  //   return handleServiceResponse(serviceResponse, res);
-  // };
+  public getUsersHandler: RequestHandler = async (
+    _req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const userRepository = await getUserRepository();
 
-  // public getUser: RequestHandler = async (req: Request, res: Response) => {
-  //   const id = Number.parseInt(req.params.id as string, 10);
-  //   const serviceResponse = await userService.findById(id);
-  //   return handleServiceResponse(serviceResponse, res);
-  // };
+      const result = await getUsers(userRepository);
+
+      res.status(StatusCodes.OK).send(result);
+    } catch (err) {
+      next(err);
+    }
+  };
 
   public getUserHandler: RequestHandler = async (
     req: Request,
